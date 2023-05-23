@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My Weather App</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <div>
+    <h1>My Weather App</h1>
+    <form>
+      <input type="text" id="search-location" placeholder="Enter location">
+      <button type="submit" onclick="getWeather()">Find</button>
+    </form>
+    <div id="weather-report"></div>
+  </div>
+
+  <script>
+    function getWeather() {
+      var location = document.getElementById("search-location").value;
+      var api_key = "90637daf80b1edbf6f2e26e8a0de71a4";
+
+      // Make API request
+      var request_url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${90637daf80b1edbf6f2e26e8a0de71a4}`;
+      fetch(request_url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          // Extract weather information from response
+          var temperature = (data.main.temp - 273.15).toFixed(2);
+          var description = data.weather[0].description;
+
+          // Update UI with weather information
+          var weather_report = document.getElementById("weather-report");
+          weather_report.innerHTML = `<p>Location: ${location}</p>
+                                       <p>Temperature: ${temperature} &deg;C</p>
+                                       <p>Description: ${description}</p>`;
+        });
+    }
+  </script>
+</body>
+
+</html>
